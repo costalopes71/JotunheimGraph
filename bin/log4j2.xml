@@ -3,7 +3,9 @@
 	
 	<Appenders>
 		<Console name="Console" target="SYSTEM_OUT">
-			<PatternLayout pattern="%d{dd/MM/yyyy HH:mm:ss} [Line: %L] [Method: %M] %highlight{%-5level} - %msg%n"/>
+			<!-- <PatternLayout pattern="%d{dd/MM/yyyy HH:mm:ss} [Line: %L] [Method: %M] %highlight{%-5level} - %msg%n"/>  -->
+			<!-- <PatternLayout pattern="%highlight{%d{HH:mm:ss.SSS} %-5level %M() - %msg%n}{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=blue, DEBUG=green bold, TRACE=black}"/>  -->
+			<PatternLayout pattern="%style{%date{DEFAULT}}{gray} %highlight{%-5level}{FATAL=bg_red, ERROR=red, WARN=yellow, INFO=green, DEBUG=blue, TRACE=cyan} [%t] %message%n"/>
 		</Console>
 		
 		<!-- 

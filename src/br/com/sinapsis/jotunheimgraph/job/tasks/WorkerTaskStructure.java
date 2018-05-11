@@ -1,4 +1,4 @@
-package br.com.sinapsis.jotunheimgraph.workers;
+package br.com.sinapsis.jotunheimgraph.job.tasks;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import br.com.sinapsis.jotunheimgraph.GraphCreator;
 import br.com.sinapsis.jotunheimgraph.dao.SubestacaoDAO;
 import br.com.sinapsis.jotunheimgraph.to.Alimentador;
+import br.com.sinapsis.jotunheimgraph.utils.Constants;
 import br.com.sinapsis.jotunheimgraph.utils.MyUtils;
 
 public class WorkerTaskStructure implements Runnable {
@@ -19,7 +20,7 @@ public class WorkerTaskStructure implements Runnable {
 	private int fimIndex;
 	private List<File> listaArquivos;
 	private SubestacaoDAO dao;
-	private static Logger logger = LogManager.getLogger();
+	private static Logger logger = LogManager.getLogger(Constants.Loggers.CONSOLE);
 	
 	public WorkerTaskStructure(int inicioIndex, int fimIndex, List<File> listaArquivos) {
 		this.dao = new SubestacaoDAO();
@@ -39,7 +40,7 @@ public class WorkerTaskStructure implements Runnable {
 			
 			Set<Alimentador> setAlimentador = null;
 			try {
-				setAlimentador = dao.getRelacoesTrecho(absolutePath, siglaSub);
+				setAlimentador = dao.getRelacoesBarras(absolutePath, siglaSub);
 			} catch (SQLException e) {
 				System.err.println(e.getMessage());
 				e.printStackTrace();

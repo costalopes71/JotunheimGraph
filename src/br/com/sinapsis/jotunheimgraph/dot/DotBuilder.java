@@ -7,12 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import br.com.sinapsis.jotunheimgraph.GraphCreator;
+import static br.com.sinapsis.jotunheimgraph.utils.Constants.JotunheimConstantes.*;
 import br.com.sinapsis.jotunheimgraph.to.Alimentador;
+import br.com.sinapsis.jotunheimgraph.utils.Constants;
 import br.com.sinapsis.jotunheimgraph.utils.MyUtils;
 
 /**
@@ -23,21 +22,20 @@ import br.com.sinapsis.jotunheimgraph.utils.MyUtils;
  */
 public class DotBuilder {
 
-	private static Logger logger = LogManager.getLogger();
+	private static Logger logger = LogManager.getLogger(Constants.Loggers.CONSOLE);
 	
 	/**
 	 * Método que cria os arquivos .DOT que são utilizados pela API GraphsViz para gerar as imagens.
+	 * @param mapSub 
 	 * @return List<File>, um <code>ArrayList</code> contendo todos os arquivos DOTs gerados.
 	 * @throws IOException
 	 */
-	public static List<File> createDotFiles() throws IOException {
+	public static List<File> createDotFiles(Map<String, Set<Alimentador>> mapSub) throws IOException {
 		
 		List<File> dotFiles = new ArrayList<>();
-		Map<String, Set<Alimentador>> mapSub = GraphCreator.subestacoesMap;
 		PrintWriter pw = null;
 		
 		//itera sobre o mapa da estrutura criada para gerar os arquivos
-		
 		for (Map.Entry<String, Set<Alimentador>> entry : mapSub.entrySet()) {
 		    
 			String siglaSub = entry.getKey();
@@ -48,7 +46,7 @@ public class DotBuilder {
 				int nrAlim = alim.getCodigo();
 				Set<String> setRelacao = alim.getRelacoes();
 				
-				File directory = new File("C:/jotunheim_required_files/dots/" + siglaSub);
+				File directory = new File(DIRETORIO_DOTS_FILE + "/" + siglaSub);
 				
 				if (!directory.exists()) {
 					directory.mkdirs();
@@ -58,7 +56,7 @@ public class DotBuilder {
 					pw = MyUtils.createPrintWriter(directory + "/" + siglaSub + "_" + nrAlim + ".dot");
 				} catch (IOException e) {
 					e.printStackTrace();
-					throw new IOException("ERRO. Nao foi possivel criar o arquivo no local: C:/jotunheim_required_files/dots/" + siglaSub + "/" + siglaSub + "_" + nrAlim + ".dot");
+					throw new IOException("ERRO. Nao foi possivel criar o arquivo no local: " + DIRETORIO_DOTS_FILE + "/" + siglaSub + "/" + siglaSub + "_" + nrAlim + ".dot");
 				}
 
 				pw.println("digraph G {");

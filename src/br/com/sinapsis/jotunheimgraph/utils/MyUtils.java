@@ -12,10 +12,9 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-
+import static br.com.sinapsis.jotunheimgraph.utils.Constants.JotunheimConstantes.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import br.com.sinapsis.jotunheimgraph.GraphCreator;
 import br.com.sinapsis.jotunheimgraph.to.Alimentador;
 
@@ -23,13 +22,19 @@ import br.com.sinapsis.jotunheimgraph.to.Alimentador;
  * Classe utilitária que possue diversos métodos que são utilizados nas demais classes do projeto.
  * @author Joao Lopes
  * @since 09/05/2018
- *
  */
 public final class MyUtils {
 
 	private static Logger logger = LogManager.getLogger();
 	
-	public static List<File> unzipFiles(String zipFilePath, String outputFolder) throws IOException {
+	/**
+	 * Método responsável por descompactar um arquivo compactado.
+	 * @param String compressedFilePath, caminho para o arquivo compactado.
+	 * @param String outputFolder, caminho do diretorio onde os arquivos serao descompactados.
+	 * @return List<File>, uma lista contendo todos os arquivos com extensao .ES que foram descompactados.
+	 * @throws IOException
+	 */
+	public static List<File> unzipFiles(String compressedFilePath, String outputFolder) throws IOException {
 		
 		System.out.println("===========================================================");
 		System.out.println("====== Iniciando a descompactação do arquivo ZIP! =D ======");
@@ -51,7 +56,7 @@ public final class MyUtils {
 		ZipEntry ze = null;
 		
 		try {
-			zis = new ZipInputStream(new FileInputStream(zipFilePath));
+			zis = new ZipInputStream(new FileInputStream(compressedFilePath));
 			ze = zis.getNextEntry();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -112,14 +117,14 @@ public final class MyUtils {
 			outputStream = new FileWriter(dotPath);
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new IOException("ERROR - Unable to create or open the new CSV file (ordered csv) in this path: " + dotPath);
+			throw new IOException("nao foi possivel criar ou abrir o arquivo neste caminho: " + dotPath);
 		}
 		return new PrintWriter(outputStream);
 	}
 
 	public static String generateBatchFile() throws IOException {
 		
-		String batPath = "C:/jotunheim_required_files/dots/arquivoBAT.bat";
+		String batPath = DIRETORIO_DOTS_FILE + "/arquivoBAT.bat";
 		PrintWriter pw = createPrintWriter(batPath);
 		
 		Map<String, Set<Alimentador>> subestacoesMap = GraphCreator.subestacoesMap;
@@ -130,8 +135,8 @@ public final class MyUtils {
 			Set<Alimentador> setAlimentador = entry.getValue();
 
 			for (Alimentador alimentador : setAlimentador) {
-				pw.println("dot -Tpng C:/jotunheim_required_files/dots/" + siglaSub + "/" + siglaSub + "_" + alimentador.getCodigo() + ".dot > "
-						+ "C:/jotunheim_required_files/images/" + siglaSub + "/" + siglaSub + "_" + alimentador.getCodigo() + ".png");
+				pw.println("dot -Tpng " + DIRETORIO_DOTS_FILE + "/" + siglaSub + "/" + siglaSub + "_" + alimentador.getCodigo() + ".dot > "
+						+ IMAGES_DIRECTORY + "/" + siglaSub + "/" + siglaSub + "_" + alimentador.getCodigo() + ".png");
 			}
 			
 		}
@@ -143,7 +148,7 @@ public final class MyUtils {
 	public static final void mkdirsImages() {
 		File imageDirectory = null;
 		for (String siglaSub : GraphCreator.subestacoesMap.keySet()) {
-			imageDirectory = new File("C:/jotunheim_required_files/images/" + siglaSub);
+			imageDirectory = new File(IMAGES_DIRECTORY + "/" + siglaSub);
 			
 			if (!imageDirectory.exists()) {
 				imageDirectory.mkdirs();
