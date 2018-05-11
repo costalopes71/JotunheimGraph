@@ -15,15 +15,28 @@ import br.com.sinapsis.jotunheimgraph.GraphCreator;
 import br.com.sinapsis.jotunheimgraph.to.Alimentador;
 import br.com.sinapsis.jotunheimgraph.utils.MyUtils;
 
+/**
+ * Classe responsável por gerar e manipular os arquivos .DOT.
+ * @author Joao Lopes
+ * @since 09/05/2018
+ *
+ */
 public class DotBuilder {
 
 	private static Logger logger = LogManager.getLogger();
 	
+	/**
+	 * Método que cria os arquivos .DOT que são utilizados pela API GraphsViz para gerar as imagens.
+	 * @return List<File>, um <code>ArrayList</code> contendo todos os arquivos DOTs gerados.
+	 * @throws IOException
+	 */
 	public static List<File> createDotFiles() throws IOException {
 		
 		List<File> dotFiles = new ArrayList<>();
 		Map<String, Set<Alimentador>> mapSub = GraphCreator.subestacoesMap;
 		PrintWriter pw = null;
+		
+		//itera sobre o mapa da estrutura criada para gerar os arquivos
 		
 		for (Map.Entry<String, Set<Alimentador>> entry : mapSub.entrySet()) {
 		    

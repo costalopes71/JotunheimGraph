@@ -19,6 +19,12 @@ import org.apache.logging.log4j.Logger;
 import br.com.sinapsis.jotunheimgraph.GraphCreator;
 import br.com.sinapsis.jotunheimgraph.to.Alimentador;
 
+/**
+ * Classe utilitária que possue diversos métodos que são utilizados nas demais classes do projeto.
+ * @author Joao Lopes
+ * @since 09/05/2018
+ *
+ */
 public final class MyUtils {
 
 	private static Logger logger = LogManager.getLogger();
