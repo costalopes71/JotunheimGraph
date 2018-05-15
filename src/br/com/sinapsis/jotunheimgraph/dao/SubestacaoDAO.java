@@ -99,7 +99,7 @@ public class SubestacaoDAO {
 
 	private void pesquisaRelacoesTabelaChave(Connection conn, Set<String> setRelacoes, Alimentador alim)
 			throws SQLException {
-		pstm = conn.prepareStatement("SELECT id_barra_1, id_barra_2 FROM TB_CHAVE WHERE id_rede = " + alim.getCodigo() + " AND estado_atual = 'F'");
+		pstm = conn.prepareStatement("SELECT id_barra_1, id_barra_2 FROM TB_CHAVE WHERE id_rede = " + alim.getCodigo() + " AND (estado_atual = 'F' OR estado_atual LIKE 'NULL')");
 		rs = pstm.executeQuery();
 		
 		while (rs.next()) {
