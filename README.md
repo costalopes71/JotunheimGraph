@@ -14,6 +14,7 @@ Projeto console.
 * SQL
 * JDBC
 * SQLite
+* Log4J
 * BAT
 
 # Tópicos interessantes do projeto
@@ -22,3 +23,4 @@ Projeto console.
 * Execucao de arquivo BAT diretamente pela aplicação usando apenas JAVA
 * Geração das imagens de grafos utilizando a biblioteca GraphViz.
 * Divisão em camadas
+* Criacao de arquivo de log da aplicação utilizando Log4J
